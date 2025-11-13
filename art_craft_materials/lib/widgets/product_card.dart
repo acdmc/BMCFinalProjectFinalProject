@@ -1,0 +1,86 @@
+// File: lib/widgets/product_card.dart
+
+import 'package:flutter/material.dart';
+
+class ProductCard extends StatelessWidget {
+  final String productName;
+  final double price;
+  final String imageUrl;
+  final VoidCallback onTap;
+
+  const ProductCard({
+    super.key,
+    required this.productName,
+    required this.price,
+    required this.imageUrl,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // 1. The Card will get its style from our new 'cardTheme'
+    return GestureDetector(
+      onTap: onTap, // Attach the passed onTap function here
+      child: Card(
+        // The theme's 'clipBehavior' will handle the clipping and rounded corners
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // 3. This Expanded makes the image take up most of the space (3/5 of total height)
+            Expanded(
+              flex: 3, // Give the image 3 "parts" of the space (60%)
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.cover, // This makes the image fill its box
+                // Show a loading spinner
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const Center(child: CircularProgressIndicator());
+                },
+                // Show an error icon
+                errorBuilder: (context, error, stackTrace) {
+                  return const Center(
+                    child: Icon(Icons.broken_image, size: 40, color: Colors.grey),
+                  );
+                },
+              ),
+            ),
+            // 4. This Expanded holds the text (2/5 of total height)
+            Expanded(
+              flex: 2, // Give the text 2 "parts" of the space (40%)
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    // Product Name
+                    Text(
+                      productName,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                      maxLines: 2, // Allow two lines for the name
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const Spacer(), // 5. Pushes the price to the bottom
+                    // Price
+                    Text(
+                      'P\$${price.toStringAsFixed(2)}',
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey[800],
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

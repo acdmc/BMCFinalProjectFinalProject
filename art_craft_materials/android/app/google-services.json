@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "169596375263",
+    "project_id": "artandcraft-flutter",
+    "storage_bucket": "artandcraft-flutter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169596375263:android:16ff97c7cc0d23b4ca596a",
+        "android_client_info": {
+          "package_name": "com.example.art_craft_materials"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBR_V0Il7YJYn7pJuG_vV1m26AReLScLc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
