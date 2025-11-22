@@ -79,7 +79,6 @@ class _ChatScreenState extends State<ChatScreen> {
     final isSenderUser = currentUser.uid == widget.chatRoomId;
 
     try {
-      // --- TASK 1: Save the message to the subcollection ---
       await _firestore
           .collection('chats')
           .doc(widget.chatRoomId)
@@ -91,18 +90,15 @@ class _ChatScreenState extends State<ChatScreen> {
         'senderEmail': currentUser.email,
       });
 
-      // --- TASK 2: Update the Parent Doc & Unread Counts ---
       Map<String, dynamic> parentDocData = {};
       parentDocData['lastMessage'] = messageText;
       parentDocData['lastMessageAt'] = timestamp;
 
       if (isSenderUser) {
-        // If USER sends, increment ADMIN's count
         parentDocData['userEmail'] = currentUser.email;
         parentDocData['unreadByAdminCount'] = FieldValue.increment(1);
 
       } else {
-        // If ADMIN sends, increment USER's count
         parentDocData['unreadByUserCount'] = FieldValue.increment(1);
       }
 
@@ -135,8 +131,8 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: Column(
         children: [
-          // --- The Message List ---
           Expanded(
+
             child: StreamBuilder<QuerySnapshot>(
               stream: _firestore
                   .collection('chats')
@@ -176,7 +172,6 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
 
-          // --- The Text Input Field ---
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(

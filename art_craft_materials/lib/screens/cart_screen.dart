@@ -1,17 +1,17 @@
 // File: lib/screens/cart_screen.dart
 
 import 'package:art_craft_materials/providers/cart_provider.dart';
-import 'package:art_craft_materials/screens/payment_screen.dart'; // 1. Import PaymentScreen [cite: 200]
+import 'package:art_craft_materials/screens/payment_screen.dart'; // 1. Import PaymentScreen
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// 2. It's a StatelessWidget again! [cite: 203, 307]
+// 2. It's a StatelessWidget again!
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // 3. We listen: true, so the list and total update [cite: 208]
+    // 3. We listen: true, so the list and total update
     final cart = Provider.of<CartProvider>(context);
 
     return Scaffold(
@@ -20,7 +20,7 @@ class CartScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // 4. The ListView is the same as before [cite: 215]
+          // 4. The ListView is the same as before
           Expanded(
             child: cart.items.isEmpty
                 ? const Center(child: Text('Your cart is empty.'))
@@ -33,12 +33,14 @@ class CartScreen extends StatelessWidget {
                     child: Text(cartItem.name[0]),
                   ),
                   title: Text(cartItem.name),
-                  subtitle: Text('Qty: ${cartItem.quantity}'),
+                  // FIX 1: Add $ for string interpolation
+                  subtitle: Text('Qty: ₱${cartItem.quantity}'),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      // FIX 1: Add $ for string interpolation
                       Text(
-                          'P${(cartItem.price * cartItem.quantity).toStringAsFixed(2)}'),
+                          '₱${(cartItem.price * cartItem.quantity).toStringAsFixed(2)}'),
                       IconButton(
                         icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
@@ -51,7 +53,7 @@ class CartScreen extends StatelessWidget {
               },
             ),
           ),
-          // 5. --- THIS IS OUR NEW PRICE BREAKDOWN CARD (from Module 15) --- [cite: 245]
+          // 5. --- THIS IS OUR NEW PRICE BREAKDOWN CARD (from Module 15) ---
           Card(
             margin: const EdgeInsets.all(16),
             child: Padding(
@@ -62,7 +64,8 @@ class CartScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text('Subtotal:', style: TextStyle(fontSize: 16)),
-                      Text('P${cart.subtotal.toStringAsFixed(2)}',
+                      // FIX 2: Add $ for string interpolation
+                      Text('₱${cart.subtotal.toStringAsFixed(2)}',
                           style: const TextStyle(fontSize: 16)),
                     ],
                   ),
@@ -82,8 +85,9 @@ class CartScreen extends StatelessWidget {
                       const Text('Total:',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold)),
+                      // FIX 3: Add $ for string interpolation
                       Text(
-                        'P${cart.totalPriceWithVat.toStringAsFixed(2)}',
+                        '₱${cart.totalPriceWithVat.toStringAsFixed(2)}',
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -96,28 +100,28 @@ class CartScreen extends StatelessWidget {
               ),
             ),
           ),
-          // 6. --- THIS IS THE MODIFIED BUTTON --- [cite: 282]
+          // 6. --- THIS IS THE MODIFIED BUTTON ---
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size.fromHeight(50),
               ),
-              // 7. Disable if cart is empty, otherwise navigate [cite: 289, 308]
+              // 7. Disable if cart is empty, otherwise navigate
               onPressed: cart.items.isEmpty
                   ? null
                   : () {
-                // 8. Navigate to our new PaymentScreen [cite: 290]
+                // 8. Navigate to our new PaymentScreen
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => PaymentScreen(
-                      // 9. Pass the final VAT-inclusive total [cite: 291, 309]
+                      // 9. Pass the final VAT-inclusive total
                       totalAmount: cart.totalPriceWithVat,
                     ),
                   ),
                 );
               },
-              // 10. No more spinner! [cite: 300, 310]
+              // 10. No more spinner!
               child: const Text('Proceed to Payment'),
             ),
           ),

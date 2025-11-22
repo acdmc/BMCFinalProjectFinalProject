@@ -84,14 +84,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   const SizedBox(height: 8),
 
-                  Text(
-                    'P\$${widget.product.price.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+
                   const SizedBox(height: 15),
 
                   const Text('Description', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),

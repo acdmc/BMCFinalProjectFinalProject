@@ -1,5 +1,3 @@
-// File: lib/screens/signup_screen.dart
-
 import 'package:art_craft_materials/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,13 +44,11 @@ class _SignUpScreenState extends State<SignupScreen> {
     });
 
     try {
-      // 1. Create the user with Firebase Authentication
       final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
 
-      // 2. Save user data (including role) to Firestore
       if (userCredential.user != null) {
         await _firestore.collection('users').doc(userCredential.user!.uid).set({
           'email': _emailController.text.trim(),
@@ -101,7 +97,6 @@ class _SignUpScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: 30),
 
-                // Email Field
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -122,7 +117,6 @@ class _SignUpScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: 20),
 
-                // Password Field
                 TextFormField(
                   controller: _passwordController,
                   obscureText: true,
@@ -159,7 +153,6 @@ class _SignUpScreenState extends State<SignupScreen> {
 
                 const SizedBox(height: 10),
 
-                // Link to Login
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacement(

@@ -2,9 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-// *****************************************************************
-// PRODUCT CLASS DEFINITION (Ang modelo ng inyong produkto)
-// *****************************************************************
 class Product {
   final String id;
   final String name;
@@ -21,5 +18,3 @@ class Product {
   });
 }
 
-// NOTE: Ang mga widgets na nagdi-display ng products (tulad ng StreamBuilder at GridView)
-// ay matatagpuan sa 'lib/screens/home_screen.dart'.

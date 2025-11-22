@@ -67,7 +67,7 @@ class ProductCard extends StatelessWidget {
                     const Spacer(), // 5. Pushes the price to the bottom
                     // Price
                     Text(
-                      'P\$${price.toStringAsFixed(2)}',
+                      '₱${price.toStringAsFixed(2)}',
                       style: TextStyle(
                           fontSize: 15,
                           color: Colors.grey[800],

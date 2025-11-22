@@ -1,5 +1,6 @@
 // File: lib/screens/profile_screen.dart
 
+import 'package:art_craft_materials/main.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -70,21 +71,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  // ⭐️ LOGOUT FIX: Clears the navigation stack
   Future<void> _signOut() async {
     final navigator = Navigator.of(context);
 
     await _auth.signOut();
 
-    // Fix: Pop all screens until the very first route (AuthWrapper)
     navigator.popUntil((route) => route.isFirst);
   }
 
   @override
   Widget build(BuildContext context) {
-    // Check if the user is available
     if (_currentUser == null) {
-      // ⭐️ ERROR FIX: Removed 'const' from Scaffold and added it to inner widgets
       return Scaffold(
         appBar: AppBar(title: const Text('Profile')),
         body: const Center(child: Text('User data unavailable. Please log in.')),
@@ -110,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const Icon(
                       Icons.account_circle,
                       size: 80,
-                      color: Colors.deepPurple,
+                      color: kDeepPink,
                     ),
                     const SizedBox(height: 10),
                     Text(
@@ -172,7 +169,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onPressed: _isLoading ? null : _changePassword,
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 15),
-                      backgroundColor: Colors.indigo,
+                      backgroundColor: kDeepPink,
                       foregroundColor: Colors.white,
                       textStyle: const TextStyle(fontSize: 18),
                     ),
@@ -202,7 +199,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               label: const Text('Log Out'),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 15),
-                backgroundColor: Colors.red[600],
+                backgroundColor: kDeepPink,
                 foregroundColor: Colors.white,
                 textStyle: const TextStyle(fontSize: 18),
               ),

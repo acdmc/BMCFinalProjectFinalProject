@@ -1,5 +1,6 @@
 // File: lib/screens/admin/admin_panel_screen.dart
 
+import 'package:art_craft_materials/main.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -79,7 +80,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Admin Panel'),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
@@ -95,7 +96,6 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    // ⭐️ FINAL FIX: Removed 'const' keyword
                     builder: (context) => AdminOrdersScreen(),
                   ),
                 );
@@ -103,7 +103,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
               icon: const Icon(Icons.list_alt),
               label: const Text('Manage All Orders'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
+                backgroundColor: kDeepPink,
               ),
             ),
 
@@ -113,7 +113,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
               icon: const Icon(Icons.chat_bubble_outline),
               label: const Text('View User Chats'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue[700],
+                backgroundColor: kDeepPink,
                 foregroundColor: Colors.white,
               ),
               onPressed: () {

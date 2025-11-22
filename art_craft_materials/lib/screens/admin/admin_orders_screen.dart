@@ -1,5 +1,3 @@
-// File: lib/screens/admin/admin_orders_screen.dart (FIXED V2: Simplified Update)
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -33,16 +31,13 @@ class AdminOrdersScreen extends StatelessWidget {
     }
   }
 
-  // CRITICAL FIX: Removed transaction and used two sequential writes.
   Future<void> _updateOrderStatus(
       BuildContext context, String orderId, String newStatus, String userId) async {
     try {
-      // 1. UPDATE THE ORDER STATUS (First write operation)
       await _firestore.collection('orders').doc(orderId).update({
         'status': newStatus,
       });
 
-      // 2. CREATE THE NOTIFICATION (Second write operation)
       await _firestore.collection('notifications').add({
         'userId': userId,
         'title': 'Order Status Updated',
@@ -60,7 +55,6 @@ class AdminOrdersScreen extends StatelessWidget {
         ),
       );
     } catch (e) {
-      // Error handling now explicitly mentions the rules
       print('Firestore Update Failed (Check Rules/Index): $e');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -71,7 +65,6 @@ class AdminOrdersScreen extends StatelessWidget {
     }
   }
 
-  // Function to show the status update dialog (Unchanged from previous fix)
   void _showStatusDialog(BuildContext context, String orderId, String currentStatus, String userId) {
     showDialog(
       context: context,

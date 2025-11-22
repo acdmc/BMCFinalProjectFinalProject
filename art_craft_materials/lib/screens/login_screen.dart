@@ -52,12 +52,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
       final User? user = userCredential.user;
 
-      // 2. FIX: Check and ensure a role exists for the user in Firestore
       if (user != null) {
         final userDoc = _firestore.collection('users').doc(user.uid);
         final docSnapshot = await userDoc.get();
 
-        // If the document does NOT exist (for old accounts), create it with a default 'user' role.
         if (!docSnapshot.exists) {
           await userDoc.set({
             'email': user.email,
@@ -67,7 +65,6 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       }
 
-      // AuthWrapper will handle navigation to HomeScreen upon successful sign-in.
 
     } on FirebaseAuthException catch (e) {
       String errorMessage = 'Login failed. Please check your credentials.';

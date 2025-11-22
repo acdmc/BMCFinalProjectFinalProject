@@ -1,5 +1,3 @@
-// File: lib/screens/home_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,13 +12,12 @@ import 'package:art_craft_materials/screens/product_detail_screen.dart';
 import 'package:art_craft_materials/screens/products_screen.dart';
 import 'package:art_craft_materials/screens/profile_screen.dart';
 
-// --- NEW IMPORT FOR CHAT ---
 import 'package:art_craft_materials/screens/chat_screen.dart';
-// --- END NEW IMPORT ---
 
-// *****************************************************************
-// HOMESCREEN WIDGET
-// *****************************************************************
+const Color kDeepPink = Color(0xFFC2185B);
+const Color kMediumPink = Color (0xFFF48FB1);
+const Color kOffWhitePink = Color (0xFFFCE4EC);
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -69,10 +66,10 @@ class _HomeScreenState extends State<HomeScreen> {
             accountEmail: Text(_currentUser?.email ?? 'Not Logged In'),
             currentAccountPicture: const CircleAvatar(
               backgroundColor: Colors.white,
-              child: Icon(Icons.person, color: Colors.deepPurple, size: 50),
+              child: Icon(Icons.person, color: kDeepPink, size: 50),
             ),
             decoration: const BoxDecoration(
-              color: Colors.deepPurple,
+              color: kDeepPink,
             ),
           ),
           ListTile(
@@ -114,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
           const Divider(),
-          // Logout is handled on the Profile screen, but we can add one here for convenience
+
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Logout'),
@@ -137,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Art & Craft Materials'),
+        title: const Text('Craft Corner'),
         actions: [
 
           // Cart Icon
@@ -160,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Container(
                     padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                      color: Colors.red,
+                      color: kDeepPink,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     constraints: const BoxConstraints(
@@ -183,23 +180,21 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       drawer: _buildDrawer(context),
 
-      // ⭐️ UPDATED: Floating Action Button with Unread Chat Badge
       floatingActionButton: _userRole == 'user' && _currentUser != null
           ? StreamBuilder<DocumentSnapshot>(
-        // Listen to *this user's* chat document (chats/{USER_ID})
+
         stream: _firestore.collection('chats').doc(_currentUser!.uid).snapshots(),
         builder: (context, snapshot) {
           int unreadCount = 0;
-          // Check if the doc exists and has our count field
+
           if (snapshot.hasData && snapshot.data!.exists) {
             final data = snapshot.data!.data();
             if (data != null) {
-              // The 'num' cast handles both int and double from Firestore
+
               unreadCount = (data as Map<String, dynamic>)['unreadByUserCount'] as int? ?? 0;
             }
           }
 
-          // Wrap the FAB in the Badge widget
           return Badge(
             isLabelVisible: unreadCount > 0,
             label: Text('$unreadCount'),
@@ -219,10 +214,10 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       )
-          : null, // If admin or not logged in, don't show the FAB
+          : null,
 
       body: StreamBuilder<QuerySnapshot>(
-        // Fetch products, limited for the home screen
+
         stream: _firestore
             .collection('products')
             .limit(8)
@@ -248,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisCount: 2,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
-              childAspectRatio: 3/4, // Standard aspect ratio for product cards
+              childAspectRatio: 3/4,
             ),
             itemCount: products.length,
             itemBuilder: (context, index) {
